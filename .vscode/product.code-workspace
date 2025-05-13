@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "name": "🚀App",
+      "path": "../apps"
+    },
+    {
+      "name": "🚀App Libs",
+      "path": "../libs/app-libs"
+    },
+    {
+      "name": "⚡Shared Libs",
+      "path": "../libs/shared-libs"
+    },
+    {
+      "name": "🦁Lion Libs",
+      "path": "../libs/lion-libs"
+    },
+    {
+      "name": "🔒",
+      "path": "../"
+    }
+  ]
+}
