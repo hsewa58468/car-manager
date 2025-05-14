@@ -1,7 +1,8 @@
-// app/info/page.tsx
+"use client";
+import React, { useEffect, useState, useCallback } from "react";
 import CollapsibleTabs from "@/components/collapse";
 import Carousel from "@/components/carousel";
-
+// import { prisma } from "@lib/prisma";
 const carDetail = {
     name: "Corolla Cross",
     image: [
@@ -23,11 +24,78 @@ const carDetail = {
     },
 };
 
+type CarData = {
+    id: number;
+    name: string;
+    price: string;
+    specs: {
+        year: number;
+        transmission: string;
+    }[];
+};
+
 export default function Info() {
     const infoTab = Object.entries(carDetail.specs);
     const splitIndex = Math.ceil(infoTab.length / 2);
     const leftItems = infoTab.slice(0, splitIndex);
     const rightItems = infoTab.slice(splitIndex);
+    const [deleteId, setDeleteId] = useState<string>("");
+
+    const [cars, setCars] = useState<CarData[]>([]);
+
+    const fetchCars = useCallback(() => {
+        fetch("/api/cars", {
+            method: "GET", // 明確指定方法
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => setCars(data));
+    }, []);
+
+    // 初始化載入與刷新觸發
+    useEffect(() => {
+        fetchCars();
+    }, [fetchCars]); // 加入 refreshKey 作為依賴
+    useEffect(() => {
+        console.log(cars);
+    }, [cars]);
+
+    // 前端元件中
+    async function addCar() {
+        const response = await fetch("/api/cars", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: "Toyota-suv-01",
+                brand: "Toyota",
+                name: "Corolla Cross",
+                price: "約 $79.9~110.9 萬",
+                imageUrl: "https://example.com/corolla.jpg",
+                specs: {
+                    year: 2025,
+                    color: "多色可選",
+                    engineCC: "1798cc / 1987cc",
+                    transmission: "CVT",
+                },
+            }),
+        });
+
+        const result = await response.json();
+        console.log("新增結果:", result);
+    }
+    async function deleteCar(id: string) {
+        const res = await fetch("/api/cars", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+        });
+        const result = await res.json();
+        console.log(result);
+    }
 
     return (
         <div className="max-w-[980px] mx-auto p-4">
@@ -35,6 +103,15 @@ export default function Info() {
             <Carousel images={carDetail.image} altPrefix={carDetail.name} />
             {/* 車名 */}
             <h1 className="text-2xl font-bold mb-6">{carDetail.name}</h1>
+            <button onClick={addCar}>add info</button>
+            <input
+                type="input"
+                id="idData"
+                value={deleteId ?? ""}
+                onChange={(e) => setDeleteId(e.target.value)}
+            />
+            <button onClick={() => deleteCar(deleteId)}>delete info</button>
+
             {/* 分區規格 */}
             <div className="flex gap-4">
                 <div className="flex-1 flex flex-col gap-4">

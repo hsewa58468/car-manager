@@ -4,13 +4,16 @@
     "private": true,
     "scripts": {
         "open-browser": "start http://localhost:3000",
-        "dev": "pnpm run open-browser && next dev --turbopack",
-        "build": "next build",
+        "dev": "prisma generate && pnpm run open-browser && next dev --turbopack",
+        "build": "prisma generate && next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "postinstall": "prisma generate"
     },
     "dependencies": {
+        "@prisma/client": "^6.7.0",
         "next": "15.3.1",
+        "prisma": "^6.7.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-spring": "^9.7.5"

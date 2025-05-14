@@ -1,0 +1,29 @@
+
+model Car {
+  id          String      @id
+  brand       String
+  name        String
+  price       String
+  imageUrl    String
+  specs       Spec?
+}
+
+model Spec {
+  id          Int      @id @default(autoincrement())
+  year        Int
+  color       String
+  engineCC    String
+  transmission String
+  carId       String   @unique
+  car         Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")  // 需包含連線池參數
+  relationMode = "prisma"
+}
