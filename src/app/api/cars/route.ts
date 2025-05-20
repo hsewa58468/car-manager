@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic"; // 禁用靜態快取
 export async function GET() {
     try {
         const cars = await prisma.car.findMany({
-            include: { specs: true },
+            include: { specs: true, info: true },
         });
         return NextResponse.json(cars);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,40 +20,41 @@ export async function GET() {
 // 新增資料
 export async function POST(request: Request) {
     try {
-        const { id, brand, name, price, imageUrl, specs } =
+        const { id, brand, name, price, imageUrl, imageGroup, specs, info } =
             await request.json();
 
-        // 檢查是否已存在關聯規格
-        const existingCar = await prisma.car.findFirst({
-            where: { name },
-            include: { specs: true },
-        });
-
-        if (existingCar?.specs) {
-            return NextResponse.json(
-                { error: "此車輛已有規格配置" },
-                { status: 400 }
-            );
-        }
-
-        // 新建車輛與規格
         const newCar = await prisma.car.create({
             data: {
                 id,
                 brand,
                 name,
-                price,
+                price: price || null,
                 imageUrl,
-                specs: {
-                    create: {
-                        year: specs.year,
-                        color: specs.color,
-                        engineCC: specs.engineCC,
-                        transmission: specs.transmission,
-                    },
-                },
+                imageGroup,
+                specs: specs
+                    ? {
+                          create: {
+                              year: specs.year,
+                              color: specs.color,
+                              engineCC: specs.engineCC,
+                              transmission: specs.transmission,
+                          },
+                      }
+                    : undefined,
+                info: info
+                    ? {
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          create: info.map((category: any) => ({
+                              title: category.title,
+                              special: category.special, // 直接給陣列
+                          })),
+                      }
+                    : undefined,
             },
-            include: { specs: true },
+            include: {
+                specs: true,
+                info: true,
+            },
         });
 
         return NextResponse.json(newCar, { status: 201 });
@@ -71,7 +72,7 @@ export async function DELETE(request: Request) {
         // 級聯刪除關聯規格
         await prisma.car.delete({
             where: { id },
-            include: { specs: true },
+            include: { specs: true, info: true },
         });
 
         return NextResponse.json(

@@ -5,7 +5,9 @@ model Car {
   name        String
   price       String
   imageUrl    String
-  specs       Spec?
+  imageGroup  String[]
+  specs       Spec? // 一對一
+  info        InfoCategory[] // 一對多（可多組 info）
 }
 
 model Spec {
@@ -16,6 +18,14 @@ model Spec {
   transmission String
   carId       String   @unique
   car         Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model InfoCategory {
+  id        String      @id @default(uuid())
+  title     String
+  special   String[]
+  carId     String
+  car       Car         @relation(fields: [carId], references: [id], onDelete: Cascade)
 }
 
 generator client {

@@ -13,6 +13,9 @@ export default function Navbar() {
             <Link href="/info" className="hover:text-blue-300">
                 資訊
             </Link>
+            <Link href="/editor" className="hover:text-blue-300">
+                後臺編輯
+            </Link>
         </nav>
     );
 }
