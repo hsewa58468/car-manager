@@ -28,6 +28,32 @@ model InfoCategory {
   car       Car         @relation(fields: [carId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  password       String         // 密碼請加密儲存
+  role           String         // 例：'ADMIN' 或 'USER'
+  refreshTokens  RefreshToken[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model RefreshToken {
+  id          String   @id @default(uuid())
+  hashedToken String   @unique
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expireAt    DateTime
+}
+
 generator client {
   provider = "prisma-client-js"
 }

@@ -24,7 +24,7 @@ const CollapsibleTabs: React.FC<CollapsibleTabsProps> = ({
                     {section}
                 </h2>
                 <ul
-                    className={`list-disc list-inside text-gray-700 scale-y-0 origin-top duration-400 ${
+                    className={`list-disc list-inside text-gray-700 scale-y-0 origin-top duration-300 ${
                         open ? "scale-y-100 max-h-none" : "max-h-0"
                     }`}>
                     {items.map((item, idx) => (
