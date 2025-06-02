@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 const cars = [
     {
@@ -194,10 +195,12 @@ const SearchList: React.FC = () => {
                     key={car.name}
                     className="relative flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden max-w-md md:max-w-2xl mx-auto mb-6">
                     {/* 圖片區塊 */}
-                    <img
+                    <Image
                         className="w-full h-48 object-cover md:w-48 md:h-auto"
                         src={car.image}
                         alt={car.name}
+                        width={1920}
+                        height={1080}
                     />
                     {/* 內容區塊 */}
                     <div className="flex flex-col justify-between p-4 flex-1 relative">

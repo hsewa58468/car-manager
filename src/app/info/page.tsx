@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import CollapsibleTabs from "@/components/collapse";
 import Carousel from "@/components/carousel";
+import CollapsePanel from "@/components/test";
+
 import { I_CarData } from "../interfaces/common_type";
 // import { prisma } from "@lib/prisma";
 const carDetail = {
@@ -66,7 +68,7 @@ export default function Info() {
 
     const fetchCars = useCallback(() => {
         fetch("/api/cars", {
-            method: "GET", // 明確指定方法
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -75,25 +77,30 @@ export default function Info() {
             .then((data) => setCars(data));
     }, []);
 
-    // 初始化載入與刷新觸發
     useEffect(() => {
         fetchCars();
-    }, [fetchCars]); // 加入 refreshKey 作為依賴
+    }, [fetchCars]);
+
     useEffect(() => {
         console.log(cars);
     }, [cars]);
 
     return (
-        <div className="max-w-[980px] mx-auto p-4">
+        <div className="max-w-[980px] mt-[45px] mx-auto p-4 ">
             {/* 上方大圖 */}
             <Carousel images={carDetail.image} altPrefix={carDetail.name} />
             {/* 車名 */}
             <h1 className="text-2xl font-bold mb-6">{carDetail.name}</h1>
             {/* 分區規格 */}
-            <div className="flex gap-4">
-                {renderItems(leftItems)}
-                {renderItems(rightItems)}
+            <div className="mb-8 p-6 bg-[#f3f3f37a] rounded-lg shadow-md ">
+                <h2 className="text-3xl font-bold mb-6">車輛規格</h2>
+                <div className="flex gap-4">
+                    {renderItems(leftItems)}
+                    {renderItems(rightItems)}
+                </div>
             </div>
+
+            <CollapsePanel />
         </div>
     );
 }
