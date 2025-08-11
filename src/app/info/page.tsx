@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 
 import CollapsibleTabs from "@/components/collapse";
@@ -9,7 +9,7 @@ import CarWithWheels from "@/components/movingCar";
 import Chat from "@/components/chat";
 // import CollapsePanel from "@/components/test";
 
-import { I_CarData } from "../interfaces/common_type";
+// import { I_CarData } from "../interfaces/common_type";
 const carDetail = {
     id: "Mazda-suv-01",
     brand: "Mazda",
@@ -125,23 +125,23 @@ export default function Info() {
         }
     }, []);
 
-    const [cars, setCars] = useState<I_CarData[]>([]);
-    console.log("cars", cars);
+    // const [cars, setCars] = useState<I_CarData[]>([]);
+    // console.log("cars", cars);
 
-    const fetchCars = useCallback(() => {
-        fetch("/api/cars", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => setCars(data));
-    }, []);
+    // const fetchCars = useCallback(() => {
+    //     fetch("/api/cars", {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => setCars(data));
+    // }, []);
 
-    useEffect(() => {
-        // fetchCars();
-    }, [fetchCars]);
+    // useEffect(() => {
+    //     // fetchCars();
+    // }, [fetchCars]);
 
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref });
