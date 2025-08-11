@@ -1,0 +1,28 @@
+model Car {
+  id       Int    @id @default(autoincrement())
+  name     String
+  price    String
+  imageUrl String
+  specs    Spec[]
+}
+
+model Spec {
+  id           Int    @id @default(autoincrement())
+  year         Int
+  color        String
+  engineCC     String
+  transmission String
+  carId        Int
+  car          Car    @relation(fields: [carId], references: [id])
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL") // 需包含連線池參數
+  relationMode = "prisma"
+}

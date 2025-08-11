@@ -124,12 +124,12 @@ const Carousel = ({ images, altPrefix }: CarouselProps) => {
             {/* 導航按鈕 */}
             <button
                 onClick={goToPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white p-3 rounded-full hover:bg-black/50 transition-colors group-hover:opacity-100">
+                className="hidden absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white p-3 rounded-full hover:bg-black/50 transition-colors group-hover:opacity-100">
                 Prev
             </button>
             <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white p-3 rounded-full hover:bg-black/50 transition-colors group-hover:opacity-100">
+                className="hidden absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white p-3 rounded-full hover:bg-black/50 transition-colors group-hover:opacity-100">
                 Next
             </button>
 
