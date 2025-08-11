@@ -11,7 +11,7 @@
 }
 
 body {
-    background: linear-gradient(to bottom, white 0%, #12181a64 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #12181a64 100%);
     color: var(--background);
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -46,6 +46,17 @@ body {
     }
 }
 
+@keyframes fade-slide-left {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
 /* 擴充動畫工具類 */
 @layer utilities {
     .animate-fade-slide-left {
@@ -61,8 +72,47 @@ body {
         will-change: opacity, transform;
     }
 
+    .animate-fade-out-slide-left {
+        animation: fade-slide-left 0.5s ease-out both;
+        will-change: opacity, transform;
+    }
+
     /* 可選：擴充動畫延遲 */
     .delay-250 {
         animation-delay: 250ms;
+    }
+
+    /* 倒轉動畫 */
+    @keyframes spin-reverse {
+        0% {
+            transform: rotate(0deg);
+        }
+        45% {
+            transform: rotate(180deg);
+        }
+        50% {
+            transform: rotate(180deg);
+        }
+        95% {
+            transform: rotate(360deg);
+        }
+    }
+    .animate-spin-reverse {
+        animation: spin-reverse 2s linear infinite;
+        display: inline-block;
+        /* 可選：優化硬體加速 */
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+
+    /* scrollbar */
+    .custom-scrollbar {
+        scrollbar-width: 6px;
+        scrollbar-color: rgba(100, 100, 100, 0.3) transparent;
+    }
+
+    /* 隱藏滾動條軌道背景（track） */
+    .custom-scrollbar::-webkit-scrollbar {
+        background: transparent;
     }
 }

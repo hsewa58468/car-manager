@@ -4,20 +4,23 @@
     "private": true,
     "scripts": {
         "open-browser": "start http://localhost:3000",
-        "dev": "prisma generate && pnpm run open-browser && next dev --turbopack",
+        "dev": "pnpm run open-browser && next dev --turbopack",
         "build": "prisma generate && next build",
         "start": "next start",
         "lint": "next lint",
         "postinstall": "prisma generate"
     },
     "dependencies": {
+        "@google/genai": "^1.11.0",
         "@prisma/client": "^6.7.0",
         "bcryptjs": "^3.0.2",
+        "framer-motion": "^12.18.1",
         "jsonwebtoken": "^9.0.2",
         "next": "15.3.1",
         "prisma": "^6.7.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "react-markdown": "^10.1.0",
         "react-spring": "^9.7.5"
     },
     "devDependencies": {

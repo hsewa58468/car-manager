@@ -1,52 +1,71 @@
 import Image from "next/image";
 
+interface I_Car {
+    name: string;
+    price: string;
+    img: string;
+}
+
+const showCar = [
+    {
+        name: "Mazda CX-3",
+        price: "85.9 萬 ~ 92.9 萬元",
+        img: "/cx3.jpg",
+    },
+    {
+        name: "Mazda 3",
+        price: "79.9 萬 ~ 101.8 萬元",
+        img: "/mazda3.jpg",
+    },
+    {
+        name: "Mazda CX-5",
+        price: "104.9 萬 ~ 139.9 萬元",
+        img: "/cx5.jpg",
+    },
+    {
+        name: "Mazda CX-60",
+        price: "118.9 萬 ~ 171.9 萬元",
+        img: "/cx60.jpg",
+    },
+];
+
+function CarCard({ name, price, img }: I_Car) {
+    return (
+        <div className="bg-white rounded-2xl shadow p-6 flex flex-col items-center">
+            <img
+                src={img}
+                alt={name}
+                className="w-full h-32 object-cover mb-4 rounded"
+            />
+            <div className="text-lg font-semibold mb-2">{name}</div>
+            <div className="text-gray-500 mb-4">${price}</div>
+            <a
+                href="/info"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition cursor-pointer">
+                View
+            </a>
+        </div>
+    );
+}
+
 export default function Home() {
     return (
-        <div className="grid grid-rows-[20px_1fr_20px]  items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-                <Image
-                    className="dark:invert"
-                    src="/next.svg"
-                    alt="Next.js logo"
-                    width={180}
-                    height={38}
-                    priority
-                />
-                <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-                    <li className="mb-2 tracking-[-.01em]">
-                        Get started by editing{" "}
-                        <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-                            src/app/page.tsx
-                        </code>
-                        .
-                    </li>
-                    <li className="tracking-[-.01em]">
-                        Save and see your changes instantly.
-                    </li>
-                </ol>
-
-                <div className="flex gap-4 items-center flex-col sm:flex-row">
-                    <a
-                        className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-                        href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        <Image
-                            className="dark:invert"
-                            src="/vercel.svg"
-                            alt="Vercel logomark"
-                            width={20}
-                            height={20}
+        <div className="grid grid-rows-[20px_1fr_20px] h-[calc(100vh-45px)]  p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <main className="flex flex-col items-center gap-[32px] row-start-2">
+                <h1 className="text-4xl font-bold">歡迎來到Car-manager</h1>
+                <p className="text-lg text-gray-600">
+                    提供您購車的建議與車款資訊。
+                </p>
+                {/* 熱門車款卡片列表 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6">
+                    {showCar.map((car) => (
+                        <CarCard
+                            key={car.name}
+                            name={car.name}
+                            price={car.price}
+                            img={car.img}
                         />
-                        Deploy now
-                    </a>
-                    <a
-                        className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-                        href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        Read our docs
-                    </a>
+                    ))}
                 </div>
             </main>
             <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

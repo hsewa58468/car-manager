@@ -7,7 +7,7 @@ model Car {
   imageUrl    String
   imageGroup  String[]
   specs       Spec? // 一對一
-  info        InfoCategory[] // 一對多（可多組 info）
+  info        InfoCategory[] // 一對多（多組 info）
 }
 
 model Spec {
@@ -36,8 +36,8 @@ enum Role {
 model User {
   id             String         @id @default(uuid())
   email          String         @unique
-  password       String         // 密碼請加密儲存
-  role           String         // 例：'ADMIN' 或 'USER'
+  password       String         
+  role           String         
   refreshTokens  RefreshToken[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -60,6 +60,6 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")  // 需包含連線池參數
+  url       = env("DATABASE_URL")
   relationMode = "prisma"
 }
