@@ -7,8 +7,7 @@
         "dev": "pnpm run open-browser && next dev --turbopack",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "postinstall": "prisma generate"
+        "lint": "next lint"
     },
     "dependencies": {
         "@google/genai": "^1.11.0",
